@@ -18,6 +18,7 @@ export default function Board(params) {
     const [search, setSearch] = useState('')
     const [inQueue, setQueue] = useState({})
 
+
     // Fetch
     useEffect(() => {
         let isActive = true
@@ -40,8 +41,7 @@ export default function Board(params) {
         load()
         return () => {isActive = false;};
     }, [])
-    
-    const visibleTickets = tickets
+
 
     // Queue
     const onAdd = useCallback((id) => {
@@ -62,15 +62,35 @@ export default function Board(params) {
         setQueue({});
     }, []);
 
-    //
+
+    // How tickets show based on filter
+    const setStatus = (status) =>
+        setFilters(prev => ({...prev, status}))
+    const setPriority = (priority) =>
+        setFilters(prev => ({...prev, priority}))
+
+    const visibleTickets = useMemo(() => {
+        let filt = tickets 
+        if (filters.status === 'All')
+            filt = filt.filter(t => t.status === filters.status)
+        if (filters.status === 'All')
+            filt = filt.filter(t => t.priority === filters.priority)
+    return filt; }, [tickets, filters, search, loading, error])
+    
+
+    // Status
     const isEmpty = !loading && !error && visibleProducts.length === 0;
 
     return (
         <section className="grid grid-cols-1 gap-6">
-            <ul>
-            </ul>
+            <div>
+                <StatusFilter value={filters.status} options={filters} onChange={setStatus}/>
+                {/* <PriorityFilter value={filters.priority} options={priorities} onChange={setPriority}/> */}
+                <SearchBox/>
+                <MyQueueSummary/>
+            </div>
             <StatusMessage loading={loading} error={error} isEmpty={isEmpty}/>
-            <TicketList tickets={visibleTickets} addToQueue={onAdd}/>
+            <TicketList tickets={visibleTickets} inQueue={inQueue} onAdd={onAdd}/>
         </section>
         
     );
