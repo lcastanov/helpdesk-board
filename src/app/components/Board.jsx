@@ -20,33 +20,49 @@ export default function Board(params) {
 
     // Fetch
     useEffect(() => {
-        fetch('/api/tickets')
-            .then(r => r.json())
-            .then(setTickets)
-            .catch(console.error);
+        let isActive = true
+        async function load() {
+            try {
+                const res = await fetch('/api/tickets')
+                if (!res.ok) throw new Error(`HTTP ${res.status}`)
+                const data = await res.json()
+                if (isActive) {
+                    setTickets(data)
+                    setError(null)
+                }
+            }   catch (err) {
+                if (isActive) {
+                    setError('Unable to load tickets')
+                    setLoading(false)
+                }
+            }
+        }
+        load()
+        return () => {isActive = false;};
     }, [])
     
     const visibleTickets = tickets
 
     // Queue
     const onAdd = useCallback((id) => {
-        setQueue(prevQueue => ({
-            ...prevQueue,
+        setQueue(prev => ({
+            ...prev,
             [id]: true
         }));
     }, []);
 
     const onRemove = useCallback((id) => {
-        setQueue(prevQueue => ({
-            ...prevQueue,
-            [id]: true
-        }));
+        setQueue(prev => {
+            const { [id]: _, ...rest} = prev
+            return rest
+        });
     }, []);
 
     const onClear = useCallback(() => {
         setQueue({});
     }, []);
 
+    //
     const isEmpty = !loading && !error && visibleProducts.length === 0;
 
     return (
