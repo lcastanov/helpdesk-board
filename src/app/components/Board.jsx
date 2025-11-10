@@ -68,15 +68,10 @@ export default function Board(params) {
         setFilters(prev => ({...prev, status}))
     const setPriority = (priority) =>
         setFilters(prev => ({...prev, priority}))
-
-    const visibleTickets = useMemo(() => {
-        let filt = tickets 
-        if (filters.status === 'All')
-            filt = filt.filter(t => t.status === filters.status)
-        if (filters.status === 'All')
-            filt = filt.filter(t => t.priority === filters.priority)
-    return filt; }, [tickets, filters, search, loading, error])
     
+    const visibleTickets = tickets.filter(t =>
+    (filters.status === 'All' || t.status === filters.status) &&
+    (filters.priority === 'All' || t.priority === filters.priority));
 
     // Status
     const isEmpty = !loading && !error && visibleProducts.length === 0;
