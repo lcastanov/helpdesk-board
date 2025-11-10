@@ -5,7 +5,7 @@ export async function GET() {
         title: 'Cannot log in to account',
         description: 'I no longer have access to my phone to verify account',
         priority: 'Medium',
-        status: 'In-progress',
+        status: 'In Progress',
         assignee: 'Unassigned',
         updatedAt: '2025-11-03T18:05:00Z'},
         // 2
@@ -53,7 +53,7 @@ export async function GET() {
         title: 'Need password reset for email',
         description: 'I cannot remember my password but it will not let me reset password',
         priority: 'High',
-        status: 'In-progress',
+        status: 'In Progress',
         assignee: 'Unassigned',
         updatedAt: '2025-11-03T18:08:00Z'},
         // 8
@@ -61,7 +61,7 @@ export async function GET() {
         title: 'Audio issues with Teams meeting',
         description: 'My headphones are connected but I cannot hear any sound or voices from the meeting',
         priority: 'Medium',
-        status: 'In-progress',
+        status: 'In Progress',
         assignee: 'Unassigned',
         updatedAt: '2025-11-03T18:08:30Z'},
         // 9
@@ -93,7 +93,7 @@ export async function GET() {
         title: 'PC is not turning on',
         description: 'PC is connected but it does not turn on when I click button',
         priority: 'Critical',
-        status: 'In-progress',
+        status: 'In Progress',
         assignee: 'Unassigned',
         updatedAt: '2025-11-03T18:10:30Z'},
         // 13
@@ -101,9 +101,9 @@ export async function GET() {
         title: 'Teams chat not showing up',
         description: 'I hear the notification sound from Teams for a new message but I see no new message in chat',
         priority: 'Medium',
-        status: 'In-progress',
+        status: 'In Progress',
         assignee: 'Unassigned',
-        updatedAt: '2025-11-03T18:11:00Z'}
+        updatedAt: '2025-11-03T18:11:00Z'},
     ];
     return Response.json(tickets);
 }

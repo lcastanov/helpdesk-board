@@ -1,7 +1,7 @@
 'use client';
 
 // DONE DONE DONE
-export default function StatusMessage({ loading, error, isEmpty }) {
+export default function StatusMessage({loading, error, isEmpty}) {
   if (loading) {
     return (
       <div className="loading-message">
